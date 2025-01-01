@@ -9,7 +9,6 @@ variable "azs" {}
 variable "default_vpc_id" {}
 variable "default_route_table_id" {}
 variable "account_id" {}
-variable "subnets" {}
 variable "rds_allocated_storage" {}
 variable "rds_engine" {}
 variable "rds_engine_version" {}
