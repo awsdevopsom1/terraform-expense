@@ -16,7 +16,7 @@ module "vpc" {
 
 module "rds" {
    source = "./modules/rds"
-   subnets = module.vpc.db_subnet 
+   subnets = module.vpc.db_subnets
    env = var.env
    tags = var.tags
    rds_allocated_storage = var.rds_allocated_storage
