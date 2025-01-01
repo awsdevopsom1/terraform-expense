@@ -120,6 +120,13 @@ resource "aws_nat_gateway" "nat" {
 resource "aws_vpc_peering_connection" "peer" {
   peer_owner_id = var.account_id
   peer_vpc_id   = var.default_vpc_id
-  vpc_id        = aws_vpc.main
+  vpc_id        = aws_vpc.main.id
   auto_accept   = true
+  tags          = merge(var.tags, { Name = "peer-for-${var.env}-vpc-to-default-vpc" })
+}
+
+resource "aws_route" "default-vpc-peer-route" {
+  route_table_id            = var.default_route_table_id
+  destination_cidr_block    = var.vpc_cidr_block
+  vpc_peering_connection_id = aws_vpc_peering_connection.peer.id
 }
