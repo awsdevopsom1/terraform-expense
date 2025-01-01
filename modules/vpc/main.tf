@@ -41,6 +41,10 @@ resource "aws_subnet" "db" {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.igw.id
   }
+  route {
+    cidr_block                = var.default_vpc_cidr
+    vpc_peering_connection_id = aws_vpc_peering_connection.peer.id
+  } 
 }     
   resource "aws_route_table" "web" {
   vpc_id = aws_vpc.main.id
@@ -49,6 +53,10 @@ resource "aws_subnet" "db" {
     cidr_block = "0.0.0.0/0"
     nat_gateway_id = aws_nat_gateway.nat.id
   }
+   route {
+    cidr_block                = var.default_vpc_cidr
+    vpc_peering_connection_id = aws_vpc_peering_connection.peer.id
+  } 
 }  
   resource "aws_route_table" "app" {
   vpc_id = aws_vpc.main.id
@@ -57,6 +65,10 @@ resource "aws_subnet" "db" {
     cidr_block = "0.0.0.0/0"
     nat_gateway_id = aws_nat_gateway.nat.id
   }
+  route {
+    cidr_block                = var.default_vpc_cidr
+    vpc_peering_connection_id = aws_vpc_peering_connection.peer.id
+  }  
 }  
   resource "aws_route_table" "db" {
   vpc_id = aws_vpc.main.id
@@ -65,6 +77,10 @@ resource "aws_subnet" "db" {
     cidr_block = "0.0.0.0/0"
     nat_gateway_id = aws_nat_gateway.nat.id
   }
+  route {
+    cidr_block                = var.default_vpc_cidr
+    vpc_peering_connection_id = aws_vpc_peering_connection.peer.id
+  }  
 }  
 resource "aws_route_table_association" "public" {
     count = length(aws_subnet.public)
@@ -101,3 +117,9 @@ resource "aws_nat_gateway" "nat" {
   subnet_id     = aws_subnet.public.*.id[0]
 }
 
+resource "aws_vpc_peering_connection" "main" {
+  peer_owner_id = var.account_id
+  peer_vpc_id   = var.default_vpc_id
+  vpc_id        = aws_vpc.main
+  auto_accept   = true
+}

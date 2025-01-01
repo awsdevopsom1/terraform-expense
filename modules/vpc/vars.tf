@@ -6,3 +6,7 @@ variable "web_subnets" {}
 variable "app_subnets" {}
 variable "db_subnets" {}
 variable "azs" {}
+variable "default_vpc_id" {}
+variable "default_route_table_id" {}
+variable "account_id" {}
+variable "default_vpc_cidr" {}
