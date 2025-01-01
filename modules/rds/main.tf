@@ -1,6 +1,6 @@
 resource "aws_db_parameter_group" "main" {
   name   = "${var.env}-mysql-rds"
-  family = "mysql5.6"
+  family = "mysql8.0"
   tags   = merge(var.tags, { Name = "${var.env}-mysql-rds" })
 
 }
