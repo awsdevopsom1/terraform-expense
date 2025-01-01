@@ -1,14 +1,14 @@
 resource "aws_db_parameter_group" "main" {
   name   = "${var.env}-mysql-rds"
   family = "mysql5.6"
-  tags   = merge(var.tags, { Name = "${var.env}-mysql-rds"})
+  tags   = merge(var.tags, { Name = "${var.env}-mysql-rds" })
 
 }
 
 resource "aws_db_subnet_group" "main" {
   name       = "${var.env}-mysql-rds"
   subnet_ids = var.subnets
-  tags   = merge(var.tags, { Name = "${var.env}-mysql-rds"})
+  tags   = merge(var.tags, { Name = "${var.env}-mysql-rds" })
 }
 resource "aws_security_group" "main" {
   name        = "${var.env}-mysql-rds"
