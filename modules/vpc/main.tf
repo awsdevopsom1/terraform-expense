@@ -117,7 +117,7 @@ resource "aws_nat_gateway" "nat" {
   subnet_id     = aws_subnet.public.*.id[0]
 }
 
-resource "aws_vpc_peering_connection" "main" {
+resource "aws_vpc_peering_connection" "peer" {
   peer_owner_id = var.account_id
   peer_vpc_id   = var.default_vpc_id
   vpc_id        = aws_vpc.main
