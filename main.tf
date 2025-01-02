@@ -28,7 +28,7 @@ module "rds" {
 
 }
 
-module "backend" {
+module "app" {
     source = "./modules/app"
     env = var.env
     component = "backend"
