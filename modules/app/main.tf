@@ -102,6 +102,8 @@ inline_policy {
                     "ssm:GetParameter"
                 ],
                 "Resource": "arn:aws:ssm:us-east-1:831926604528:parameter/${var.env}.${var.component}.*"
+                "Resource": "arn:aws:ssm:us-east-1:831926604528:parameter/${var.env}.rds.*"
+
             },
             {
                 "Sid": "ListResources",  # Fixed typo here
