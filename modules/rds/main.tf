@@ -5,11 +5,11 @@ resource "aws_db_parameter_group" "main" {
 
 }
 
-resource "aws_db_subnet_group" "main" {
-  name       = "${var.env}-mysql-rds"
-  subnet_ids = var.subnets
-  tags   = merge(var.tags, { Name = "${var.env}-mysql-rds" })
-}
+# resource "aws_db_subnet_group" "main" {
+#   name       = "${var.env}-mysql-rds"
+#   subnet_ids = var.subnets
+#   tags   = merge(var.tags, { Name = "${var.env}-mysql-rds" })
+# }
 resource "aws_security_group" "main" {
   name        = "${var.env}-mysql-rds"
   description = "${var.env}-mysql-rds"
