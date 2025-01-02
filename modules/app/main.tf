@@ -35,9 +35,10 @@ resource "aws_launch_template" "main" {
   instance_type = var.instance_type
   vpc_security_group_ids = [aws_security_group.main.id]
   tags = merge(var.tags, { Name = "${var.env}-mysql-rds" })
-  user_data     = base64encode(templatefile("${path.module}/userdata.sh", {
-  role_name = var.component
-  env   = var.env
+  user_data = base64encode(templatefile("${path.module}/userdata.sh", {
+    role_name = var.component
+    env   = var.env
+    
   }))
 }
 
@@ -63,3 +64,50 @@ resource "aws_autoscaling_group" "main" {
 
 
 
+resource "aws_iam_role" "main" {
+  name = "my_inline_policy"
+  tags = merge(var.tags, { Name = "${var.env}-mysql-rds" })
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Sid    = ""
+        Principal = {
+          Service = "ec2.amazonaws.com"
+        }
+      },
+    ]
+  })
+
+
+
+inline_policy {
+    name = "SSM-Read_Access"
+
+    policy = jsonencode({
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Sid": "GetResources",
+                "Effect": "Allow",
+                "Action": [
+                    "ssm:GetParameterHistory",
+                    "ssm:DescribeDocumentParameters",
+                    "ssm:GetParametersByPath",
+                    "ssm:GetParameters",
+                    "ssm:GetParameter"
+                ],
+                "Resource": "arn:aws:ssm:us-east-1:831926604528:parameter/${var.env}.${var.component}.*"
+            },
+            {
+                "Sid": "ListResources",  # Fixed typo here
+                "Effect": "Allow",
+                "Action": "ssm:DescribeParameters",
+                "Resource": "*"
+            }
+        ]
+    })
+}
+}
