@@ -40,6 +40,7 @@ module "app" {
     app_port = var.backend["app_port"]
     sg_cidrs = var.app_subnets    
     bastion_node = var.bastion_node
+    backend = var.backend
 }
 
 
