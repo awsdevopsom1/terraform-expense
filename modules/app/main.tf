@@ -83,8 +83,6 @@ resource "aws_iam_role" "main" {
     ]
   })
 
-
-
 inline_policy {
     name = "SSM-Read_Access"
 
@@ -103,7 +101,7 @@ inline_policy {
                 ],
 
                 "Resource": "arn:aws:ssm:us-east-1:831926604528:parameter/${var.env}.${var.component}.*",
-                "Resource": "arn:aws:ssm:us-east-1:831926604528:parameter/${var.env}.rds.*"
+                
 
             },
             {
