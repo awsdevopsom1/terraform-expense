@@ -27,4 +27,4 @@ backend = {
       instance_type = "t3.small"
       instance_count = 1
    }
-bastion_node = ["172.31.83.102"]
+bastion_node = ["172.31.83.102/32"]
