@@ -51,7 +51,7 @@ resource "aws_autoscaling_group" "main" {
   
 
   launch_template {
-    id      = aws_launch_template.foobar.id
+    id      = aws_launch_template.main.id
     version = "$Latest"
   }
 
