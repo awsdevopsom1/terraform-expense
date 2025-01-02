@@ -28,13 +28,13 @@ module "rds" {
 
 }
 
-module "app" {
-    source = "./module/app"
+module "backend" {
+    source = "./modules/app"
     env = var.env
     component = "backend"
     tags = var.tags
     instance_type = var.backend["instance_type"]
-    instance_count = var.instance_count["instance_count"]
+    instance_count = var.backend["instance_count"]
     subnets = module.vpc.app_subnets
     vpc_id = module.vpc.vpc_id
     app_port = var.backend["app_port"]
