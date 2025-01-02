@@ -38,8 +38,12 @@ resource "aws_launch_template" "main" {
   user_data = base64encode(templatefile("${path.module}/userdata.sh", {
     role_name = var.component
     env   = var.env
-    
+
+
   }))
+  iam_instance_profile {
+    name = aws_iam_instance_profile.main.name
+  }  
 }
 
 resource "aws_autoscaling_group" "main" {
@@ -62,10 +66,8 @@ resource "aws_autoscaling_group" "main" {
   }
 }
 
-
-
 resource "aws_iam_role" "main" {
-  name = "my_inline_policy"
+  name = "${var.env}-${var.component}"
   tags = merge(var.tags, { Name = "${var.env}-mysql-rds" })
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -110,4 +112,10 @@ inline_policy {
         ]
     })
 }
+}
+
+
+resource "aws_iam_instance_profile" "main" {
+  name = "${var.env}-${var.component}"
+  role = aws_iam_role.role.name
 }
