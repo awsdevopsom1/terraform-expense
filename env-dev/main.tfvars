@@ -22,3 +22,9 @@ rds_engine = "mysql"
 rds_engine_version = "8.0"
 rds_instance_class = "db.t3.micro"
 
+default = {
+      app_port = 8080
+      instance_type = t3.micro
+      instance_count = 1
+   }
+bastion_node = ["172.31.83.102"]

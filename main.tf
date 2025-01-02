@@ -28,5 +28,18 @@ module "rds" {
 
 }
 
+module "backend" {
+    source = "./module/app"
+    env = var.env
+    component = "backend"
+    tags = var.tags
+    instance_type = var.backend["instance_type"]
+    instance_count = var.instance_count["instance_count"]
+    subnets = module.vpc.app_subnets
+    vpc_id = module.vpc.vpc_id
+    app_port = var.backend["app_port"]
+    sg_cidrs = var.app_subnets    
+    bastion_node = var.bastion_node
+}
 
 

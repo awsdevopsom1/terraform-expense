@@ -1,0 +1,66 @@
+resource "aws_security_group" "main" {
+  name        = "${var.env}-${var.component}"
+  description = "${var.env}-${var.component}"
+  vpc_id      = var.vpc_id
+
+  ingress {
+    description = "App"
+    from_port   = var.app_port
+    to_port     = var.app_port
+    protocol    = "tcp"
+    cidr_blocks = var.sg_cidrs
+  }
+
+    ingress {
+    description = "SSH"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = var.bastion_node
+  }
+
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+  tags = merge(var.tags, { Name = "${var.env}-mysql-rds" })
+}
+resource "aws_launch_template" "main" {
+  name_prefix   = "${var.env}"-"${var.component}"
+  image_id      = data.aws_ami.ami
+  instance_type = var.instance_type
+  vpc_security_group_ids = [aws_security_group.main.id]
+  tags = merge(var.tags, { Name = "${var.env}-mysql-rds" })
+  user_data     = base64encode(templatefile("${path.module}/userdata.sh", {
+  role_name = var.component
+  env   = var.env
+  }))
+}
+
+resource "aws_autoscaling_group" "main" {
+  name =   "${var.env}- ${var.component}"
+  availability_zones = ["us-east-1a"]
+  desired_capacity   = var.instance_count
+  max_size           = var.instance_count + 5
+  min_size           = var.instance_count
+  vpc_zone_identifier = var.subnets
+  
+
+  launch_template {
+    id      = aws_launch_template.foobar.id
+    version = "$Latest"
+  }
+
+  tag {
+    key = "Name"
+    value = "${var.env}-${var.component}"
+    propagate_at_launch = true  
+  }
+}
+
+
+
