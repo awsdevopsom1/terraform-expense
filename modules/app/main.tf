@@ -101,15 +101,32 @@ inline_policy {
                 ],
 
                 "Resource": "arn:aws:ssm:us-east-1:831926604528:parameter/${var.env}.${var.component}.*",
+                "Resource": "arn:aws:ssm:us-east-1:831926604528:parameter/${var.env}.rds.*"
                 
 
             },
             {
-                "Sid": "ListResources",  # Fixed typo here
+                "Sid": "ListResources",  
                 "Effect": "Allow",
                 "Action": "ssm:DescribeParameters",
                 "Resource": "*"
-            }
+            },
+
+            		{
+                "Sid": "VisualEditor0",
+                "Effect": "Allow",
+                "Action": [
+                  "s3:GetObject",
+                  "s3:ListBucket",
+                  "s3:PutObject",
+                  "s3:PutObjectRetention",
+                  "s3:DeleteObjectVersion",
+                  "s3:DeleteObject"
+                ],
+			        "resource": "arn:aws:s3:::awsom-terraform-state/.*",
+               "resource": "arn:aws:s3:::awsom-terraform-state"
+          
+		}
         ]
     })
 }
