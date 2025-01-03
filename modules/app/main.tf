@@ -119,7 +119,6 @@ inline_policy {
                   "s3:GetObject",
                   "s3:ListBucket",
                   "s3:PutObject",
-                  "s3:PutObjectRetention",
                   "s3:DeleteObjectVersion",
                   "s3:DeleteObject"
                 ],
