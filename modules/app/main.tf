@@ -122,8 +122,10 @@ inline_policy {
                   "s3:DeleteObjectVersion",
                   "s3:DeleteObject"
                 ],
-			        "resource": "arn:aws:s3:::awsom-terraform-state/.*",
-               "resource": "arn:aws:s3:::awsom-terraform-state"
+          "Resource": [
+            "arn:aws:s3:::awsom-terraform-state/.*",
+            "arn:aws:s3:::awsom-terraform-state"
+          ]
           
 		}
         ]
