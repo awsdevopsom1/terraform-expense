@@ -9,3 +9,4 @@ variable "app_port" {}
 variable "sg_cidrs" {}
 variable "backend" {}
 variable "bastion_node" {}
+variable "frontend" {}

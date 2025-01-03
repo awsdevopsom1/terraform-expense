@@ -27,4 +27,10 @@ backend = {
       instance_type = "t3.small"
       instance_count = 1
    }
+
+frontend = {
+      app_port = 80
+      instance_type = "t3.small"
+      instance_count = 1
+   }   
 bastion_node = ["172.31.83.102/32"]

@@ -16,3 +16,4 @@ variable "rds_instance_class" {}
 variable "default_vpc_cidr" {}
 variable "bastion_node" {}
 variable "backend" {}
+variable "frontend" {}
