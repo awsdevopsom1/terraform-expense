@@ -45,21 +45,21 @@ module "backend" {
 }
 
 
-# module "frontend" {
-#     source = "./modules/app"
-#     env = var.env
-#     component = "frontend"
-#     tags = var.tags
-#     instance_type = var.frontend
-#     instance_count = var.frontend["instance_count"]
-#     subnets = module.vpc.app_subnets
-#     vpc_id = module.vpc.vpc_id
-#     app_port = var.frontend["app_port"]
-#     sg_cidrs = var.app_subnets    
-#     bastion_node = var.bastion_node
-#     frontend = var.frontend
-#     backend = var.backend
-# }
+module "frontend" {
+    source = "./modules/app"
+    env = var.env
+    component = "frontend"
+    tags = var.tags
+    instance_type = var.frontend["instance_type"]
+    instance_count = var.frontend["instance_count"]
+    subnets = module.vpc.app_subnets
+    vpc_id = module.vpc.vpc_id
+    app_port = var.frontend["app_port"]
+    sg_cidrs = var.app_subnets    
+    bastion_node = var.bastion_node
+    frontend = var.frontend
+    backend = var.backend
+}
 
 
 
