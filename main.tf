@@ -45,7 +45,7 @@ module "backend" {
 }
 
 
-module "backend" {
+module "frontend" {
     source = "./modules/app"
     env = var.env
     component = "frontend"
